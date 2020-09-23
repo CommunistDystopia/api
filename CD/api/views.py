@@ -44,7 +44,7 @@ class JailLocationMinViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'patch', 'put']
 
     def get_queryset(self):
-        return Location.objects.filter(location_min=self.kwargs['jails_pk'])
+        return Location.objects.filter(jail_location_min=self.kwargs['jails_pk'])
 
 
 class JailLocationMaxViewSet(viewsets.ModelViewSet):
@@ -53,7 +53,7 @@ class JailLocationMaxViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'patch', 'put']
 
     def get_queryset(self):
-        return Location.objects.filter(location_max=self.kwargs['jails_pk'])
+        return Location.objects.filter(jail_location_max=self.kwargs['jails_pk'])
 
 
 class JailSlaveSpawnViewSet(viewsets.ModelViewSet):
@@ -143,7 +143,7 @@ class RoomLocationMinViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'patch', 'put']
 
     def get_queryset(self):
-        return Location.objects.filter(location_min=self.kwargs['rooms_pk'])
+        return Location.objects.filter(room_location_min=self.kwargs['rooms_pk'])
 
 
 class RoomLocationMaxViewSet(viewsets.ModelViewSet):
@@ -152,7 +152,7 @@ class RoomLocationMaxViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'patch', 'put']
 
     def get_queryset(self):
-        return Location.objects.filter(location_max=self.kwargs['rooms_pk'])
+        return Location.objects.filter(room_location_max=self.kwargs['rooms_pk'])
 
 
 class SlaveViewSet(viewsets.ModelViewSet):

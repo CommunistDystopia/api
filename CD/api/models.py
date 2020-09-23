@@ -114,6 +114,10 @@ class Room(models.Model):
                                         related_name='room_location_max'
                                         )
 
+    def __str__(self):
+        return self.name
+
+
 class Slave(models.Model):
     slave_timer = models.IntegerField()
     player = models.OneToOneField(Player,

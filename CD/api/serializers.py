@@ -7,6 +7,7 @@ from CD.api.models import (
     Town,
     Player,
     Slave,
+    Room,
     CriminalRecord,
     Section,
     Page,
@@ -119,7 +120,7 @@ class RoomSerializer(serializers.HyperlinkedModelSerializer):
                                                       )
 
     class Meta:
-        model = Player
+        model = Room
         fields = (
             'name',
             'tax',
