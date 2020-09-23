@@ -36,6 +36,19 @@ players_router.register(r'user', views.PlayerUserViewSet,
 players_router.register(r'jail', views.PlayerJailViewSet,
                         basename='jail')
 
+# Room
+router.register(r'rooms', views.RoomViewSet)
+rooms_router = routers.NestedSimpleRouter(router, r'rooms',
+                                          lookup='rooms')
+rooms_router.register(r'town', views.RoomTownViewSet,
+                      basename='town')
+rooms_router.register(r'players', views.RoomPlayerViewSet,
+                      basename='players')
+rooms_router.register(r'location_min', views.RoomLocationMinViewSet,
+                      basename='location_min')
+rooms_router.register(r'location_max', views.RoomLocationMaxViewSet,
+                      basename='location_max')
+
 # Slave
 router.register(r'slaves', views.SlaveViewSet)
 slaves_router = routers.NestedSimpleRouter(router, r'slaves',
@@ -70,6 +83,7 @@ urlpatterns = [
     path('', include(jails_router.urls)),
     path('', include(towns_router.urls)),
     path('', include(players_router.urls)),
+    path('', include(rooms_router.urls)),
     path('', include(slaves_router.urls)),
     path('', include(criminalrecords_router.urls)),
     path('', include(pages_router.urls)),

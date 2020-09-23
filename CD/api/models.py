@@ -42,11 +42,11 @@ class Jail(models.Model):
     name = models.TextField()
     location_min = models.OneToOneField(Location,
                                         on_delete=models.CASCADE,
-                                        related_name='location_min'
+                                        related_name='jail_location_min'
                                         )
     location_max = models.OneToOneField(Location,
                                         on_delete=models.CASCADE,
-                                        related_name='location_max'
+                                        related_name='jail_location_max'
                                         )
     is_max_security = models.BooleanField(default=False)
     slave_spawn = models.OneToOneField(Location,
@@ -87,11 +87,32 @@ class Player(models.Model):
                              null=True
                              )
     is_soldier = models.BooleanField(default=False)
-    is_major = models.BooleanField(default=False)
+    is_mayor = models.BooleanField(default=False)
 
     def __str__(self):
         return self.uuid
 
+
+class Room(models.Model):
+    name = models.TextField()
+    tax = models.FloatField()
+    isSellable = models.BooleanField()
+    canBuild = models.BooleanField()
+    canDestroy = models.BooleanField()
+    town = models.ForeignKey(Town,
+                             on_delete=models.CASCADE
+                             )
+    player = models.ManyToManyField(Player,
+                                    blank=True
+                                    )
+    location_min = models.OneToOneField(Location,
+                                        on_delete=models.CASCADE,
+                                        related_name='room_location_min'
+                                        )
+    location_max = models.OneToOneField(Location,
+                                        on_delete=models.CASCADE,
+                                        related_name='room_location_max'
+                                        )
 
 class Slave(models.Model):
     slave_timer = models.IntegerField()

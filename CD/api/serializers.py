@@ -94,8 +94,39 @@ class PlayerSerializer(serializers.HyperlinkedModelSerializer):
             'uuid',
             'town',
             'user',
-            'is_soldier',
             'jail',
+            'is_soldier',
+            'is_mayor',
+        )
+
+
+class RoomSerializer(serializers.HyperlinkedModelSerializer):
+    town = serializers.PrimaryKeyRelatedField(many=False,
+                                              read_only=False,
+                                              queryset=Town.objects.all()
+                                              )
+    player = serializers.PrimaryKeyRelatedField(many=True,
+                                                read_only=False,
+                                                queryset=Player.objects.all()
+                                                )
+    location_min = serializers.PrimaryKeyRelatedField(many=False,
+                                                      read_only=False,
+                                                      queryset=Location.objects.all()
+                                                      )
+    location_max = serializers.PrimaryKeyRelatedField(many=False,
+                                                      read_only=False,
+                                                      queryset=Location.objects.all()
+                                                      )
+
+    class Meta:
+        model = Player
+        fields = (
+            'name',
+            'tax',
+            'town',
+            'player',
+            'location_min',
+            'location_max'
         )
 
 

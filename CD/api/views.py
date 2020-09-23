@@ -6,6 +6,7 @@ from CD.api.models import (
     Jail,
     Town,
     Player,
+    Room,
     Slave,
     CriminalRecord,
     Section,
@@ -16,6 +17,7 @@ from CD.api.serializers import (
     LocationSerializer,
     JailSerializer,
     TownSerializer,
+    RoomSerializer,
     PlayerSerializer,
     SlaveSerializer,
     CriminalRecordSerializer,
@@ -109,6 +111,48 @@ class PlayerJailViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Jail.objects.filter(player=self.kwargs['players_pk'])
+
+
+class RoomViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = RoomSerializer
+    queryset = Room.objects.all()
+
+
+class RoomTownViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = TownSerializer
+    http_method_names = ['get', 'patch', 'put']
+
+    def get_queryset(self):
+        return Town.objects.filter(room=self.kwargs['rooms_pk'])
+
+
+class RoomPlayerViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = PlayerSerializer
+    http_method_names = ['get', 'patch', 'put']
+
+    def get_queryset(self):
+        return Player.objects.filter(room=self.kwargs['rooms_pk'])
+
+
+class RoomLocationMinViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = LocationSerializer
+    http_method_names = ['get', 'patch', 'put']
+
+    def get_queryset(self):
+        return Location.objects.filter(location_min=self.kwargs['rooms_pk'])
+
+
+class RoomLocationMaxViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = LocationSerializer
+    http_method_names = ['get', 'patch', 'put']
+
+    def get_queryset(self):
+        return Location.objects.filter(location_max=self.kwargs['rooms_pk'])
 
 
 class SlaveViewSet(viewsets.ModelViewSet):
