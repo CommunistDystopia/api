@@ -7,7 +7,7 @@ from CD.api.models import (
     Town,
     Player,
     Room,
-    Slave,
+    Prisoner,
     CriminalRecord,
     Section,
     Page,
@@ -19,7 +19,7 @@ from CD.api.serializers import (
     TownSerializer,
     RoomSerializer,
     PlayerSerializer,
-    SlaveSerializer,
+    PrisonerSerializer,
     CriminalRecordSerializer,
     SectionSerializer,
     PageSerializer,
@@ -44,7 +44,8 @@ class JailLocationMinViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'patch', 'put']
 
     def get_queryset(self):
-        return Location.objects.filter(jail_location_min=self.kwargs['jails_pk'])
+        return Location.objects.filter(
+            jail_location_min=self.kwargs['jails_pk'])
 
 
 class JailLocationMaxViewSet(viewsets.ModelViewSet):
@@ -53,16 +54,17 @@ class JailLocationMaxViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'patch', 'put']
 
     def get_queryset(self):
-        return Location.objects.filter(jail_location_max=self.kwargs['jails_pk'])
+        return Location.objects.filter(
+            jail_location_max=self.kwargs['jails_pk'])
 
 
-class JailSlaveSpawnViewSet(viewsets.ModelViewSet):
+class JailPrisonerSpawnViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = LocationSerializer
     http_method_names = ['get', 'patch', 'put']
 
     def get_queryset(self):
-        return Location.objects.filter(slave_spawn=self.kwargs['jails_pk'])
+        return Location.objects.filter(prisoner_spawn=self.kwargs['jails_pk'])
 
 
 class TownViewSet(viewsets.ModelViewSet):
@@ -143,7 +145,8 @@ class RoomLocationMinViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'patch', 'put']
 
     def get_queryset(self):
-        return Location.objects.filter(room_location_min=self.kwargs['rooms_pk'])
+        return Location.objects.filter(
+            room_location_min=self.kwargs['rooms_pk'])
 
 
 class RoomLocationMaxViewSet(viewsets.ModelViewSet):
@@ -152,40 +155,41 @@ class RoomLocationMaxViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'patch', 'put']
 
     def get_queryset(self):
-        return Location.objects.filter(room_location_max=self.kwargs['rooms_pk'])
+        return Location.objects.filter(
+            room_location_max=self.kwargs['rooms_pk'])
 
 
-class SlaveViewSet(viewsets.ModelViewSet):
+class PrisonerViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    serializer_class = SlaveSerializer
-    queryset = Slave.objects.all()
+    serializer_class = PrisonerSerializer
+    queryset = Prisoner.objects.all()
 
 
-class SlavePlayerViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = PlayerSerializer
-    http_method_names = ['get', 'patch', 'put']
-
-    def get_queryset(self):
-        return Player.objects.filter(slave=self.kwargs['slaves_pk'])
-
-
-class SlaveOwnerViewSet(viewsets.ModelViewSet):
+class PrisonerPlayerViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = PlayerSerializer
     http_method_names = ['get', 'patch', 'put']
 
     def get_queryset(self):
-        return Player.objects.filter(owner=self.kwargs['slaves_pk'])
+        return Player.objects.filter(prisoner=self.kwargs['prisoners_pk'])
 
 
-class SlaveJailViewSet(viewsets.ModelViewSet):
+class PrisonerOwnerViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = PlayerSerializer
+    http_method_names = ['get', 'patch', 'put']
+
+    def get_queryset(self):
+        return Player.objects.filter(owner=self.kwargs['prisoners_pk'])
+
+
+class PrisonerJailViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = JailSerializer
     http_method_names = ['get', 'patch', 'put']
 
     def get_queryset(self):
-        return Jail.objects.filter(player=self.kwargs['slaves_pk'])
+        return Jail.objects.filter(player=self.kwargs['prisoners_pk'])
 
 
 class CriminalRecordViewSet(viewsets.ModelViewSet):

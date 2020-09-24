@@ -6,7 +6,7 @@ from CD.api.models import (
     Jail,
     Town,
     Player,
-    Slave,
+    Prisoner,
     Room,
     CriminalRecord,
     Section,
@@ -15,7 +15,6 @@ from CD.api.models import (
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
         model = User
         fields = (
@@ -44,10 +43,10 @@ class JailSerializer(serializers.HyperlinkedModelSerializer):
                                                       read_only=False,
                                                       queryset=Location.objects.all()
                                                       )
-    slave_spawn = serializers.PrimaryKeyRelatedField(many=False,
-                                                     read_only=False,
-                                                     queryset=Location.objects.all()
-                                                     )
+    prisoner_spawn = serializers.PrimaryKeyRelatedField(many=False,
+                                                        read_only=False,
+                                                        queryset=Location.objects.all()
+                                                        )
 
     class Meta:
         model = Jail
@@ -56,7 +55,7 @@ class JailSerializer(serializers.HyperlinkedModelSerializer):
             'location_min',
             'location_max',
             'is_max_security',
-            'slave_spawn',
+            'prisoner_spawn',
         )
 
 
@@ -131,7 +130,7 @@ class RoomSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
-class SlaveSerializer(serializers.HyperlinkedModelSerializer):
+class PrisonerSerializer(serializers.HyperlinkedModelSerializer):
     player = serializers.PrimaryKeyRelatedField(many=False,
                                                 read_only=False,
                                                 queryset=Player.objects.all()
@@ -146,9 +145,9 @@ class SlaveSerializer(serializers.HyperlinkedModelSerializer):
                                               )
 
     class Meta:
-        model = Slave
+        model = Prisoner
         fields = (
-            'slave_timer',
+            'prisoner_timer',
             'player',
             'owner',
             'jail',

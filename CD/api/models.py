@@ -49,10 +49,10 @@ class Jail(models.Model):
                                         related_name='jail_location_max'
                                         )
     is_max_security = models.BooleanField(default=False)
-    slave_spawn = models.OneToOneField(Location,
-                                       on_delete=models.CASCADE,
-                                       related_name='slave_spawn'
-                                       )
+    prisoner_spawn = models.OneToOneField(Location,
+                                          on_delete=models.CASCADE,
+                                          related_name='prisoner_spawn'
+                                          )
 
     def __str__(self):
         return self.name
@@ -118,8 +118,8 @@ class Room(models.Model):
         return self.name
 
 
-class Slave(models.Model):
-    slave_timer = models.IntegerField()
+class Prisoner(models.Model):
+    prisoner_timer = models.IntegerField()
     player = models.OneToOneField(Player,
                                   on_delete=models.CASCADE
                                   )

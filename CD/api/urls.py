@@ -15,8 +15,8 @@ jails_router.register(r'location_min', views.JailLocationMinViewSet,
                       basename='location_min')
 jails_router.register(r'location_max', views.JailLocationMaxViewSet,
                       basename='location_max')
-jails_router.register(r'slave_spawn', views.JailSlaveSpawnViewSet,
-                      basename='slave_spawn')
+jails_router.register(r'prisoner_spawn', views.JailPrisonerSpawnViewSet,
+                      basename='prisoner_spawn')
 
 # Town
 router.register(r'towns', views.TownViewSet)
@@ -49,16 +49,16 @@ rooms_router.register(r'location_min', views.RoomLocationMinViewSet,
 rooms_router.register(r'location_max', views.RoomLocationMaxViewSet,
                       basename='location_max')
 
-# Slave
-router.register(r'slaves', views.SlaveViewSet)
-slaves_router = routers.NestedSimpleRouter(router, r'slaves',
-                                           lookup='slaves')
-slaves_router.register(r'player', views.SlavePlayerViewSet,
-                       basename='player')
-slaves_router.register(r'owner', views.SlaveOwnerViewSet,
-                       basename='owner')
-slaves_router.register(r'jail', views.SlaveJailViewSet,
-                       basename='jail')
+# Prisoner
+router.register(r'prisoners', views.PrisonerViewSet)
+prisoners_router = routers.NestedSimpleRouter(router, r'prisoners',
+                                              lookup='prisoners')
+prisoners_router.register(r'player', views.PrisonerPlayerViewSet,
+                          basename='player')
+prisoners_router.register(r'owner', views.PrisonerOwnerViewSet,
+                          basename='owner')
+prisoners_router.register(r'jail', views.PrisonerJailViewSet,
+                          basename='jail')
 
 # CriminalRecord
 router.register(r'criminalrecords', views.CriminalRecordViewSet)
@@ -84,7 +84,7 @@ urlpatterns = [
     path('', include(towns_router.urls)),
     path('', include(players_router.urls)),
     path('', include(rooms_router.urls)),
-    path('', include(slaves_router.urls)),
+    path('', include(prisoners_router.urls)),
     path('', include(criminalrecords_router.urls)),
     path('', include(pages_router.urls)),
 ]

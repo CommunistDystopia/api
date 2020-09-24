@@ -5,7 +5,7 @@ from CD.api.models import (
     Town,
     Player,
     Room,
-    Slave,
+    Prisoner,
     CriminalRecord,
     Section,
     Page,
@@ -16,7 +16,7 @@ admin.site.register(Jail)
 admin.site.register(Town)
 admin.site.register(Player)
 admin.site.register(Room)
-admin.site.register(Slave)
+admin.site.register(Prisoner)
 admin.site.register(CriminalRecord)
 admin.site.register(Section)
 admin.site.register(Page)
