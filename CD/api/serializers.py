@@ -11,6 +11,8 @@ from CD.api.models import (
     CriminalRecord,
     Section,
     Page,
+    Command,
+    Argument,
 )
 
 
@@ -195,9 +197,41 @@ class PageSerializer(serializers.HyperlinkedModelSerializer):
         model = Page
         fields = (
             'title',
-            'body',
             'type',
             'related_pages',
             'section',
             'town'
+        )
+
+
+class CommandSerializer(serializers.HyperlinkedModelSerializer):
+    page = serializers.PrimaryKeyRelatedField(many=False,
+                                              read_only=False,
+                                              queryset=Page.objects.all()
+                                              )
+
+    class Meta:
+        model = Command
+        fields = (
+            'name',
+            'description',
+            'usage',
+            'permission',
+            'role',
+            'page'
+        )
+
+
+class ArgumentSerializer(serializers.HyperlinkedModelSerializer):
+    command = serializers.PrimaryKeyRelatedField(many=False,
+                                                 read_only=False,
+                                                 queryset=Command.objects.all()
+                                                 )
+
+    class Meta:
+        model = Argument
+        fields = (
+            'name',
+            'description',
+            'command',
         )

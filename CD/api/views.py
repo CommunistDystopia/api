@@ -11,6 +11,8 @@ from CD.api.models import (
     CriminalRecord,
     Section,
     Page,
+    Command,
+    Argument,
 )
 from CD.api.serializers import (
     UserSerializer,
@@ -23,6 +25,8 @@ from CD.api.serializers import (
     CriminalRecordSerializer,
     SectionSerializer,
     PageSerializer,
+    CommandSerializer,
+    ArgumentSerializer,
 )
 
 
@@ -227,3 +231,33 @@ class PageSectionViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Section.objects.filter(page=self.kwargs['pages_pk'])
+
+
+class CommandViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = CommandSerializer
+    queryset = Command.objects.all()
+
+
+class CommandPageViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = PageSerializer
+    http_method_names = ['get', 'patch', 'put']
+
+    def get_queryset(self):
+        return Page.objects.filter(command=self.kwargs['commands_pk'])
+
+
+class ArgumentViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ArgumentSerializer
+    queryset = Argument.objects.all()
+
+
+class ArgumentCommandViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = CommandSerializer
+    http_method_names = ['get', 'patch', 'put']
+
+    def get_queryset(self):
+        return Command.objects.filter(argument=self.kwargs['arguments_pk'])

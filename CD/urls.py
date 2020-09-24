@@ -23,9 +23,7 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('CD.api.urls')),
-    path(
-        'api-drf/', include('rest_framework.urls', namespace='rest_framework')
-    ),
+    path('tinymce/', include('tinymce.urls')),
     re_path(
         r'^api-auth/token/$',
         TokenObtainPairView.as_view(),

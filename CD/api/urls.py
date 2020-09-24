@@ -76,6 +76,20 @@ pages_router = routers.NestedSimpleRouter(router, r'pages', lookup='pages')
 pages_router.register(r'section', views.PageSectionViewSet,
                       basename='section')
 
+# Command
+router.register(r'commands', views.CommandViewSet)
+commands_router = routers.NestedSimpleRouter(router, r'commands',
+                                             lookup='commands')
+commands_router.register(r'page', views.CommandPageViewSet,
+                         basename='page')
+
+# Argument
+router.register(r'arguments', views.ArgumentViewSet)
+arguments_router = routers.NestedSimpleRouter(router, r'arguments',
+                                              lookup='arguments')
+arguments_router.register(r'command', views.ArgumentCommandViewSet,
+                          basename='command')
+
 app_name = 'api'
 
 urlpatterns = [
@@ -87,4 +101,6 @@ urlpatterns = [
     path('', include(prisoners_router.urls)),
     path('', include(criminalrecords_router.urls)),
     path('', include(pages_router.urls)),
+    path('', include(commands_router.urls)),
+    path('', include(arguments_router.urls)),
 ]

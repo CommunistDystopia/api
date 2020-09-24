@@ -9,14 +9,27 @@ from CD.api.models import (
     CriminalRecord,
     Section,
     Page,
+    Command,
+    Argument,
 )
+
+
+class RoomAdmin(admin.ModelAdmin):
+    filter_horizontal = ('player',)
+
+
+class PageAdmin(admin.ModelAdmin):
+    filter_horizontal = ('related_pages',)
+
 
 admin.site.register(Location)
 admin.site.register(Jail)
 admin.site.register(Town)
 admin.site.register(Player)
-admin.site.register(Room)
+admin.site.register(Room, RoomAdmin)
 admin.site.register(Prisoner)
 admin.site.register(CriminalRecord)
 admin.site.register(Section)
-admin.site.register(Page)
+admin.site.register(Page, PageAdmin)
+admin.site.register(Command)
+admin.site.register(Argument)

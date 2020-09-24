@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from tinymce.models import HTMLField
 
 
 def max_world_size(value):
@@ -166,7 +167,7 @@ class Page(models.Model):
         TOWN = 3
 
     title = models.TextField()
-    body = models.TextField()
+    body = HTMLField()
     type = models.IntegerField(choices=TypeChoices.choices)
     related_pages = models.ManyToManyField('self',
                                            blank=True
@@ -192,3 +193,28 @@ class Page(models.Model):
     def save(self, *args, **kwargs):
         self.full_clean()
         super(Page, self).save(*args, **kwargs)
+
+
+class Command(models.Model):
+    name = models.TextField()
+    description = models.TextField()
+    usage = models.TextField()
+    permission = models.TextField()
+    role = models.TextField()
+    page = models.ForeignKey(Page,
+                             on_delete=models.CASCADE
+                             )
+
+    def __str__(self):
+        return self.name
+
+
+class Argument(models.Model):
+    name = models.TextField()
+    description = models.TextField()
+    command = models.ForeignKey(Command,
+                                on_delete=models.CASCADE
+                                )
+
+    def __str__(self):
+        return self.name
