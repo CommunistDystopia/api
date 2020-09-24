@@ -21,7 +21,7 @@ def max_world_height(value):
 
 
 class Location(models.Model):
-    label = models.TextField(max_length=30)
+    label = models.CharField(max_length=255)
     x = models.DecimalField(max_digits=23,
                             decimal_places=15,
                             validators=[max_world_size]
@@ -40,7 +40,7 @@ class Location(models.Model):
 
 
 class Jail(models.Model):
-    name = models.TextField()
+    name = models.CharField(max_length=255)
     location_min = models.OneToOneField(Location,
                                         on_delete=models.CASCADE,
                                         related_name='jail_location_min'
@@ -60,7 +60,7 @@ class Jail(models.Model):
 
 
 class Town(models.Model):
-    name = models.TextField()
+    name = models.CharField(max_length=255)
     description = models.TextField()
     location = models.OneToOneField(Location,
                                     on_delete=models.CASCADE
@@ -71,7 +71,8 @@ class Town(models.Model):
 
 
 class Player(models.Model):
-    uuid = models.TextField(primary_key=True)
+    uuid = models.CharField(primary_key=True,
+                            max_length=255)
     town = models.ForeignKey(Town,
                              on_delete=models.CASCADE,
                              blank=True,
@@ -95,7 +96,7 @@ class Player(models.Model):
 
 
 class Room(models.Model):
-    name = models.TextField()
+    name = models.CharField(max_length=255)
     tax = models.FloatField()
     isSellable = models.BooleanField()
     canBuild = models.BooleanField()
@@ -154,7 +155,7 @@ class CriminalRecord(models.Model):
 
 
 class Section(models.Model):
-    name = models.TextField(max_length=30)
+    name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
@@ -166,7 +167,7 @@ class Page(models.Model):
         GUIDE = 2
         TOWN = 3
 
-    title = models.TextField()
+    title = models.CharField(max_length=255)
     body = HTMLField()
     type = models.IntegerField(choices=TypeChoices.choices)
     related_pages = models.ManyToManyField('self',
@@ -196,11 +197,11 @@ class Page(models.Model):
 
 
 class Command(models.Model):
-    name = models.TextField()
+    name = models.CharField(max_length=255)
     description = models.TextField()
-    usage = models.TextField()
-    permission = models.TextField()
-    role = models.TextField()
+    usage = models.CharField(max_length=255)
+    permission = models.CharField(max_length=255)
+    role = models.CharField(max_length=255)
     page = models.ForeignKey(Page,
                              on_delete=models.CASCADE
                              )
@@ -210,7 +211,7 @@ class Command(models.Model):
 
 
 class Argument(models.Model):
-    name = models.TextField()
+    name = models.CharField(max_length=255)
     description = models.TextField()
     command = models.ForeignKey(Command,
                                 on_delete=models.CASCADE
