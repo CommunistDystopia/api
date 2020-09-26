@@ -138,3 +138,8 @@ REST_FRAMEWORK = {
     ),
     'EXCEPTION_HANDLER': 'CD.api.utils.custom_exception_handler',
 }
+
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': 'table,spellchecker,paste,searchreplace,image,emoticons',
+    'height': '500px',
+}
