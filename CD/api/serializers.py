@@ -20,8 +20,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = (
-            "id",
-            "username",
+            'id',
+            'username',
         )
 
 
@@ -29,6 +29,7 @@ class LocationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Location
         fields = (
+            'id',
             'label',
             'x',
             'y',
@@ -53,6 +54,7 @@ class JailSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Jail
         fields = (
+            'id',
             'name',
             'location_min',
             'location_max',
@@ -70,6 +72,7 @@ class TownSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Town
         fields = (
+            'id',
             'name',
             'description',
             'location'
@@ -123,6 +126,7 @@ class RoomSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Room
         fields = (
+            'id',
             'name',
             'tax',
             'town',
@@ -149,6 +153,7 @@ class PrisonerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Prisoner
         fields = (
+            'id',
             'prisoner_timer',
             'player',
             'owner',
@@ -165,6 +170,7 @@ class CriminalRecordSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CriminalRecord
         fields = (
+            'id',
             'date',
             'message',
             'player'
@@ -175,6 +181,7 @@ class SectionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Section
         fields = (
+            'id',
             'name',
         )
 
@@ -196,6 +203,7 @@ class PageSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Page
         fields = (
+            'id',
             'title',
             'type',
             'related_pages',
@@ -213,6 +221,7 @@ class CommandSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Command
         fields = (
+            'id',
             'name',
             'description',
             'usage',
@@ -231,6 +240,7 @@ class ArgumentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Argument
         fields = (
+            'id',
             'name',
             'description',
             'command',
