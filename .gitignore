@@ -76,3 +76,6 @@ env/
 
 # PyCharm
 .idea
+
+# Docker
+docker-compose-deploy.yml

@@ -19,12 +19,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = []
+ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS')
+if ALLOWED_HOSTS_ENV:
+    ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -81,11 +84,11 @@ WSGI_APPLICATION = 'CD.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv('DATABASE_NAME'),
-        "USER": os.getenv('DATABASE_USER'),
-        "PASSWORD": os.getenv('DATABASE_PASSWORD'),
-        "HOST": os.getenv('DATABASE_HOST'),
-        "PORT": os.getenv('DATABASE_PORT'),
+        "NAME": os.environ.get('DATABASE_NAME'),
+        "USER": os.environ.get('DATABASE_USER'),
+        "PASSWORD": os.environ.get('DATABASE_PASSWORD'),
+        "HOST": os.environ.get('DATABASE_HOST'),
+        "PORT": os.environ.get('DATABASE_PORT'),
     }
 }
 
@@ -123,7 +126,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/static/'
+MEDIA_URL = '/static/media/'
+
+STATIC_ROOT = '/vol/web/static'
+MEDIA_ROOT = '/vol/web/media'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': (
@@ -141,10 +148,10 @@ REST_FRAMEWORK = {
 }
 
 OAUTH2_PROVIDER = {
-    'REFRESH_TOKEN_EXPIRE_SECONDS': os.getenv('REFRESH_TOKEN_EXPIRE_SECONDS'),
+    'REFRESH_TOKEN_EXPIRE_SECONDS': os.environ.get('REFRESH_TOKEN_EXPIRE_SECONDS'),
     'SCOPES': {'read': 'Read scope',
                'write': 'Write scope'},
-    'ACCESS_TOKEN_EXPIRE_SECONDS': os.getenv('ACCESS_TOKEN_EXPIRE_SECONDS')
+    'ACCESS_TOKEN_EXPIRE_SECONDS': os.environ.get('ACCESS_TOKEN_EXPIRE_SECONDS')
 }
 
 TINYMCE_DEFAULT_CONFIG = {
