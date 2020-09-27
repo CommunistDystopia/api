@@ -9,9 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-from datetime import timedelta
 from pathlib import Path
-import CD.api
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'CD.api',
+    'oauth2_provider',
     'corsheaders',
     'tinymce',
 ]
@@ -126,17 +125,26 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
-    'REFRESH_TOKEN_LIFETIME': timedelta(weeks=1),
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': (
+        'rest_framework.pagination.PageNumberPagination'
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.TokenHasReadWriteScope',
+    ),
+    'EXCEPTION_HANDLER': (
+        'CD.api.utils.custom_exception_handler'
+    ),
 }
 
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-    'EXCEPTION_HANDLER': 'CD.api.utils.custom_exception_handler',
+OAUTH2_PROVIDER = {
+    'REFRESH_TOKEN_EXPIRE_SECONDS': 5000000,
+    'SCOPES': {'read': 'Read scope',
+               'write': 'Write scope'},
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 10000
 }
 
 TINYMCE_DEFAULT_CONFIG = {

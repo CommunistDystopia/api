@@ -9,9 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-from datetime import timedelta
 from pathlib import Path
-import CD.api
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,10 +19,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'f_a21&&kh*d3g@@*$c9dv8toeyh(d@=pvy8zwl&%4#y5bd&ag9'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost']
 
@@ -41,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'CD.api',
+    'oauth2_provider',
     'corsheaders',
     'tinymce',
 ]
@@ -82,11 +81,11 @@ WSGI_APPLICATION = 'CD.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "cddb",
-        "USER": "postgres",
-        "PASSWORD": "12345",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+        "NAME": os.getenv('DATABASE_NAME'),
+        "USER": os.getenv('DATABASE_USER'),
+        "PASSWORD": os.getenv('DATABASE_PASSWORD'),
+        "HOST": os.getenv('DATABASE_HOST'),
+        "PORT": os.getenv('DATABASE_PORT'),
     }
 }
 
@@ -126,17 +125,26 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
-    'REFRESH_TOKEN_LIFETIME': timedelta(weeks=1),
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': (
+        'rest_framework.pagination.PageNumberPagination'
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.TokenHasReadWriteScope',
+    ),
+    'EXCEPTION_HANDLER': (
+        'CD.api.utils.custom_exception_handler'
+    ),
 }
 
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-    'EXCEPTION_HANDLER': 'CD.api.utils.custom_exception_handler',
+OAUTH2_PROVIDER = {
+    'REFRESH_TOKEN_EXPIRE_SECONDS': os.getenv('REFRESH_TOKEN_EXPIRE_SECONDS'),
+    'SCOPES': {'read': 'Read scope',
+               'write': 'Write scope'},
+    'ACCESS_TOKEN_EXPIRE_SECONDS': os.getenv('ACCESS_TOKEN_EXPIRE_SECONDS')
 }
 
 TINYMCE_DEFAULT_CONFIG = {

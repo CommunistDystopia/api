@@ -69,6 +69,7 @@ celerybeat.pid
 
 # Environments
 env/
+.env
 
 # macOS
 .DS_Store
