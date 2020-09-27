@@ -36,7 +36,7 @@ class Location(models.Model):
                             )
 
     def __str__(self):
-        return f'{self.label} (x: {self.x}, y: {self.y}, z: {self.z})'
+        return f'{self.label} (x: {round(self.x, 2)}, y: {round(self.y)}, z: {round(self.z, 2)})'
 
 
 class Jail(models.Model):
