@@ -1,0 +1,23 @@
+on: [push]
+
+name: Deploy to Docker Hub
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Build, tag, and push image to Docker hub
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        docker build . -t $DOCKER_USER/django-hub:web
+        docker build ./proxy -t $DOCKER_USER/django-hub:nginx-proxy
+        docker push $DOCKER_USER/django-hub:web
+        docker push $DOCKER_USER/django-hub:nginx-proxy
