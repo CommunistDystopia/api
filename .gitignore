@@ -69,9 +69,13 @@ celerybeat.pid
 
 # Environments
 env/
+.env
 
 # macOS
 .DS_Store
 
 # PyCharm
 .idea
+
+# Docker
+docker-compose-deploy.yml
