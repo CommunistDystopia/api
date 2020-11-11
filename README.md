@@ -1,7 +1,5 @@
 # Communist Dystopia [API]
 
-![](https://i.imgur.com/MOEbiJC.png)
-
 ## Requirements:
 
 * Python 3.7+
